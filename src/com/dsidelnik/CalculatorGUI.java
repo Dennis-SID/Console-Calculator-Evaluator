@@ -2,18 +2,49 @@ package com.dsidelnik;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class CalculatorGUI {
+public class CalculatorGUI extends JPanel implements ActionListener {
+    JTextField textField;
+
+
     public static void main (String [] args) {
-        JFrame frame = new JFrame("JFrame");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(new Label("LABEL"), BorderLayout.CENTER);
-        frame.setVisible(true);
-        frame.setSize(500, 500);
 
+        createAndShowGUI();
+
+    }
+
+    public CalculatorGUI() {
+        super(new GridBagLayout());
+
+        textField = new JTextField(40);
+        textField.addActionListener(this);
+
+        GridBagConstraints c = new GridBagConstraints();
+        c.gridwidth = GridBagConstraints.REMAINDER;
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        add(textField, c);
+
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        String text = textField.getText();
+    }
+
+    private static void createAndShowGUI() {
+        JFrame frame = new JFrame("Calculator");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        frame.setSize(500, 500);
 
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setLocation(dim.width / 2 - frame.getSize().width / 2, dim.height / 2 - frame.getSize().height / 2);
-        
+
+        frame.add(new CalculatorGUI());
+        frame.setVisible(true);
     }
+
 }
+
