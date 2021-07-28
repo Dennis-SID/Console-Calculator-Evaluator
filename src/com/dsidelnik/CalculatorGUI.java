@@ -48,3 +48,28 @@ public class CalculatorGUI extends JPanel implements ActionListener {
 
 }
 
+class Test extends JFrame {
+    private JButton button = new JButton("Press");
+    private JTextField textField = new JTextField("", 10);
+
+
+    public Test() {
+        super("Simple Example");
+        this.setBounds(100, 100, 200, 200);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Container container = this.getContentPane();
+        container.setLayout(new GridLayout(3, 3, 2, 2));
+
+        button.addActionListener(new ButtonEventListener());
+        container.add(button);
+
+    }
+
+    class ButtonEventListener implements ActionListener {
+        public void actionPerformed (ActionEvent e) {
+            
+        }
+    }
+}
+
