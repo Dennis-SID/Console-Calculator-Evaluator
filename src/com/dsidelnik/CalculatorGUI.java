@@ -68,7 +68,7 @@ class Test extends JFrame {
 
     class ButtonEventListener implements ActionListener {
         public void actionPerformed (ActionEvent e) {
-            
+
         }
     }
 }
