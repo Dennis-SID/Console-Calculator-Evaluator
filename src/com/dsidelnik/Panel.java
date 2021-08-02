@@ -10,22 +10,22 @@ import java.awt.event.KeyEvent;
 public class Panel extends JPanel {
 
     private JButton[] numberButtons = new JButton[10];
-    private final JButton dotButton = new JButton(".");
-    private final JButton resetButton = new JButton("C");
-    private final JButton divideButton = new JButton("/");
-    private final JButton multipleButton = new JButton("X");
-    private final JButton plusButton = new JButton("+");
-    private final JButton minusButton = new JButton("-");
-    private final JButton equalsButton = new JButton("=");
-    private final JButton unaryButton = new JButton("-/+");
-    private final JButton backSpaceButton = new JButton("<--");
+    private final JButton DOT_BUTTON = new JButton(".");
+    private final JButton RESET_BUTTON = new JButton("C");
+    private final JButton DIVIDE_BUTTON = new JButton("/");
+    private final JButton MULTIPLE_BUTTON = new JButton("X");
+    private final JButton PLUS_BUTTON = new JButton("+");
+    private final JButton MINUS_BUTTON = new JButton("-");
+    private final JButton EQUALS_BUTTON = new JButton("=");
+    private final JButton UNARY_BUTTON = new JButton("-/+");
+    private final JButton BS_BUTTON = new JButton("<--");
     JTextField textField = new JTextField();
-    private final Font font = new Font("TimesNewRoman", Font.BOLD, 20);
+    private final Font FONT = new Font("TimesNewRoman", Font.BOLD, 20);
 
-    private final int buttonHeight = 60;
-    private final int buttonWidth = 60;
-    private final int textFieldHeight = 60;
-    private final int textFieldWidth = 272;
+    private final int BUTTON_HEIGHT = 60;
+    private final int BUTTON_WIDTH = 60;
+    private final int TEXT_FIELD_HEIGHT = 60;
+    private final int TEXT_FIELD_WIDTH = 272;
     private final int indent = 10;
 
     public Panel() {
@@ -54,8 +54,8 @@ public class Panel extends JPanel {
     }
 
     private void setButton(JButton button, int buttonX, int buttonY) {
-        button.setBounds(buttonX, buttonY, buttonWidth, buttonHeight);
-        button.setFont(font);
+        button.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT);
+        button.setFont(FONT);
         add(button);
     }
 
@@ -67,17 +67,17 @@ public class Panel extends JPanel {
             if (x < 3) {
                 for (int y = 0; y < 3; y++) {
                     setButton(numberButtons[buttonNumber], buttonX, buttonY);
-                    buttonX += buttonWidth + indent;
+                    buttonX += BUTTON_WIDTH + indent;
                     buttonNumber++;
                 }
                 buttonX = indent;
-                buttonY += buttonHeight + indent;
+                buttonY += BUTTON_HEIGHT + indent;
             } else {
-                setButton(dotButton, buttonX, buttonY);
-                buttonX += buttonWidth + indent;
+                setButton(DOT_BUTTON, buttonX, buttonY);
+                buttonX += BUTTON_WIDTH + indent;
                 setButton(numberButtons[0], buttonX, buttonY);
-                buttonX += buttonWidth + indent;
-                setButton(unaryButton, buttonX, buttonY);
+                buttonX += BUTTON_WIDTH + indent;
+                setButton(UNARY_BUTTON, buttonX, buttonY);
             }
         }
     }
@@ -86,32 +86,32 @@ public class Panel extends JPanel {
         int buttonY = 160;
         int buttonX = 220;
 
-        setButton(minusButton, buttonX, buttonY);
-        buttonY += buttonHeight + indent;
-        setButton(plusButton, buttonX, buttonY);
-        buttonY += buttonHeight + indent;
-        equalsButton.setBounds(buttonX, buttonY, buttonWidth, buttonHeight * 2 + indent);
-        equalsButton.setFont(font);
-        add(equalsButton);
+        setButton(MINUS_BUTTON, buttonX, buttonY);
+        buttonY += BUTTON_HEIGHT + indent;
+        setButton(PLUS_BUTTON, buttonX, buttonY);
+        buttonY += BUTTON_HEIGHT + indent;
+        EQUALS_BUTTON.setBounds(buttonX, buttonY, BUTTON_WIDTH, BUTTON_HEIGHT * 2 + indent);
+        EQUALS_BUTTON.setFont(FONT);
+        add(EQUALS_BUTTON);
     }
 
     private void setUpperLineOperators() {
         int buttonY = 90;
         int buttonX = 10;
 
-        setButton(resetButton, buttonX, buttonY);
-        buttonX += buttonWidth + indent;
-        setButton(divideButton, buttonX, buttonY);
-        buttonX += buttonWidth + indent;
-        setButton(multipleButton, buttonX, buttonY);
-        buttonX += buttonWidth + indent;
-        setButton(backSpaceButton, buttonX, buttonY);
+        setButton(RESET_BUTTON, buttonX, buttonY);
+        buttonX += BUTTON_WIDTH + indent;
+        setButton(DIVIDE_BUTTON, buttonX, buttonY);
+        buttonX += BUTTON_WIDTH + indent;
+        setButton(MULTIPLE_BUTTON, buttonX, buttonY);
+        buttonX += BUTTON_WIDTH + indent;
+        setButton(BS_BUTTON, buttonX, buttonY);
 
     }
 
     private void setTextField(JTextField textField) {
-        textField.setBounds(indent, indent, textFieldWidth, textFieldHeight);
-        textField.setFont(font);
+        textField.setBounds(indent, indent, TEXT_FIELD_WIDTH, TEXT_FIELD_HEIGHT);
+        textField.setFont(FONT);
         textField.setEditable(false);
         add(textField);
     }
@@ -131,10 +131,20 @@ public class Panel extends JPanel {
             public void keyPressed(KeyEvent e) {
                 char symbol = e.getKeyChar();
 
-                if (!Character.isDigit(symbol)) return;
-
-                textField.setText(textField.getText() + symbol);
+                if (Character.isDigit(symbol)) {
+                    textField.setText(textField.getText() + symbol);
+                } else if (symbol == '.' && oneDot()) {
+                    textField.setText(textField.getText() + symbol);
+                }
             }
         });
+    }
+
+    private boolean oneDot() {
+        String expression = textField.getText();
+        if (expression.length() == 0) return false;
+
+        int index = expression.indexOf('.');
+        return index == -1;
     }
 }
